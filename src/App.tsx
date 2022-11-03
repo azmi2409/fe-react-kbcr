@@ -1,42 +1,61 @@
-import logo from "./assets/logo-big.png";
-import { GiHamburgerMenu } from "react-icons/gi";
+import React, { useContext, useEffect } from "react";
+import TopBar from "./components/Navigation/TopBar";
+import SideBar from "./components/Navigation/Sidebar";
+import NavProvider from "./contexts/NavContext";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Outlet,
+} from "react-router-dom";
+import { NavContext } from "./contexts/NavContext";
 
-const TopBar = () => {
-  return (
-    <div className="flex justify-between items-center bg-gray-200 py-2 px-12 fixed top-0 left-0 right-0 h-24">
-      <div className="flex items-center">
-        <GiHamburgerMenu className="text-2xl mr-44 cursor-pointer" />
-        <img
-          src={logo}
-          alt="logo"
-          className="h-24 cursor-pointer transition-all delay-200 hover:scale-105"
-        />
-      </div>
-      <div className="flex items-center">
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
-          Login
-        </button>
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Sign Up
-        </button>
-      </div>
-    </div>
-  );
-};
-
-const SideBar = () => {
-  return (
-    <div className="bg-gray-200 w-64 h-screen fixed top-24 left-0 bottom-0"></div>
-  );
+type RChild = {
+  children: React.ReactNode;
 };
 
 function App() {
   return (
-    <main>
+    <Router>
+      <Routes>
+        <Route element={<Header />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+        </Route>
+      </Routes>
+    </Router>
+  );
+}
+
+function Header() {
+  return (
+    <NavProvider>
       <TopBar />
       <SideBar />
+      <Wrapper>
+        <Outlet />
+      </Wrapper>
+    </NavProvider>
+  );
+}
+
+function Wrapper({ children }: RChild) {
+  const { isSidebarOpen } = useContext(NavContext);
+  const cName = isSidebarOpen ? "ml-48" : "";
+
+  return (
+    <main className={`mt-24 transition-all delay-300 ${cName}`}>
+      {children}
     </main>
   );
+}
+
+function Home() {
+  return <div>Home</div>;
+}
+
+function Login() {
+  return <div>Login</div>;
 }
 
 export default App;
