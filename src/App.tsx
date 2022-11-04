@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import { NavContext } from "./contexts/NavContext";
 
-type RChild = {
+export type RChild = {
   children: React.ReactNode;
 };
 

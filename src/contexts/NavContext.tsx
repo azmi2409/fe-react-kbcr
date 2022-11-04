@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import { RChild } from "../App";
 
 interface NavContextProps {
   isSidebarOpen: boolean;
@@ -7,7 +8,7 @@ interface NavContextProps {
 
 export const NavContext = createContext({} as NavContextProps);
 
-export default function NavProvider({ children }: any) {
+export default function NavProvider({ children }: RChild) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   return (
