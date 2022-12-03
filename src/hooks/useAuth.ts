@@ -1,5 +1,6 @@
 import useApi from "./useApi";
 import { useReducer } from "react";
+import { useNavigate } from "react-router-dom";
 
 type User = {
   id: string;
@@ -42,6 +43,7 @@ const authReducer = (state: Auth, action: Action) => {
 };
 
 const useAuth = () => {
+  const navigate = useNavigate();
   const pb: any = useApi();
   const [auth, dispatch] = useReducer(authReducer, {
     token: pb.authStore.token,
@@ -62,6 +64,7 @@ const useAuth = () => {
             user,
           },
         });
+        navigate("/");
       }
     } catch (error) {
       console.log(error);

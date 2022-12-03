@@ -9,6 +9,8 @@ import {
   Outlet,
 } from "react-router-dom";
 import { NavContext } from "./contexts/NavContext";
+import { AuthProvider } from "./contexts/AuthContext";
+import Login from "./pages/Login";
 
 export type RChild = {
   children: React.ReactNode;
@@ -30,11 +32,13 @@ function App() {
 function Header() {
   return (
     <NavProvider>
-      <TopBar />
-      <SideBar />
-      <Wrapper>
-        <Outlet />
-      </Wrapper>
+      <AuthProvider>
+        <TopBar />
+        <SideBar />
+        <Wrapper>
+          <Outlet />
+        </Wrapper>
+      </AuthProvider>
     </NavProvider>
   );
 }
@@ -44,7 +48,7 @@ function Wrapper({ children }: RChild) {
   const cName = isSidebarOpen ? "ml-48" : "";
 
   return (
-    <main className={`mt-24 transition-all delay-300 ${cName}`}>
+    <main className={`mt-24 py-5 transition-all delay-300 ${cName}`}>
       {children}
     </main>
   );
@@ -52,10 +56,6 @@ function Wrapper({ children }: RChild) {
 
 function Home() {
   return <div>Home</div>;
-}
-
-function Login() {
-  return <div>Login</div>;
 }
 
 export default App;
