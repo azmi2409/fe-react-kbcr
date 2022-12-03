@@ -889,6 +889,11 @@ pify@^2.3.0:
   resolved "https://registry.yarnpkg.com/pify/-/pify-2.3.0.tgz#ed141a6ac043a849ea588498e7dca8b15330e90c"
   integrity sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==
 
+pocketbase@^0.8.2:
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/pocketbase/-/pocketbase-0.8.2.tgz#fb5d8f23b0685c0843e67c15c5993d61511129ab"
+  integrity sha512-3fk/Jg9ZUkICAq0wNHwm4rNWWEy1IfUKSPgIpZx/0HUdwDivNArlY6I2DefPScfenaB/gqvTWBsB+jf7RpvCyQ==
+
 postcss-combine-duplicated-selectors@^10.0.3:
   version "10.0.3"
   resolved "https://registry.yarnpkg.com/postcss-combine-duplicated-selectors/-/postcss-combine-duplicated-selectors-10.0.3.tgz#71e8b6783e99cd560cf08ba7b896ad0db318c11c"
