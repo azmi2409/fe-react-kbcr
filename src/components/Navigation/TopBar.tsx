@@ -1,21 +1,17 @@
-import { useContext } from "react";
 import logo from "../../assets/logo-big.png";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { NavContext } from "../../contexts/NavContext";
 import { useNavigate } from "react-router-dom";
+import { Header } from "@mantine/core";
 
 const TopBar = () => {
-  const { isSidebarOpen, setIsSidebarOpen } = useContext(NavContext);
-  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
   const navigate = useNavigate();
 
   return (
-    <div className="flex justify-between items-center bg-gray-100 py-2 px-12 fixed top-0 left-0 right-0 h-24">
+    <Header
+      className="flex justify-between items-center bg-gray-100"
+      p="lg"
+      height={100}
+    >
       <div className="flex items-center">
-        <GiHamburgerMenu
-          onClick={toggleSidebar}
-          className="text-2xl mr-24 cursor-pointer"
-        />
         <img
           src={logo}
           alt="logo"
@@ -33,7 +29,7 @@ const TopBar = () => {
           Sign Up
         </button>
       </div>
-    </div>
+    </Header>
   );
 };
 

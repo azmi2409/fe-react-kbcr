@@ -1,20 +1,15 @@
-import React, { useContext, useEffect } from "react";
-import TopBar from "./components/Navigation/TopBar";
-import SideBar from "./components/Navigation/Sidebar";
-import NavProvider from "./contexts/NavContext";
+import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
   Route,
   Outlet,
 } from "react-router-dom";
-import { NavContext } from "./contexts/NavContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import Login from "./pages/Login";
-
-export type RChild = {
-  children: React.ReactNode;
-};
+import { AppShell } from "@mantine/core";
+import SideBar from "./components/Navigation/Sidebar";
+import TopBar from "./components/Navigation/TopBar";
 
 function App() {
   return (
@@ -31,26 +26,19 @@ function App() {
 
 function Header() {
   return (
-    <NavProvider>
-      <AuthProvider>
-        <TopBar />
-        <SideBar />
-        <Wrapper>
-          <Outlet />
-        </Wrapper>
-      </AuthProvider>
-    </NavProvider>
+    <AuthProvider>
+      <Wrapper>
+        <Outlet />
+      </Wrapper>
+    </AuthProvider>
   );
 }
 
-function Wrapper({ children }: RChild) {
-  const { isSidebarOpen } = useContext(NavContext);
-  const cName = isSidebarOpen ? "ml-48" : "";
-
+function Wrapper({ children }: React.PropsWithChildren) {
   return (
-    <main className={`mt-24 py-5 transition-all delay-300 ${cName}`}>
+    <AppShell header={<TopBar />} navbar={<SideBar />} padding="lg">
       {children}
-    </main>
+    </AppShell>
   );
 }
 

@@ -1,8 +1,8 @@
-import { useForm, FieldValues } from "react-hook-form";
+import { useForm, yupResolver } from "@mantine/form";
 import { useContext } from "react";
 import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 import AuthContext from "../contexts/AuthContext";
+import { Button, TextInput, Group, PasswordInput } from "@mantine/core";
 
 const loginSchema = yup.object().shape({
   email: yup.string().email().required(),
@@ -12,48 +12,44 @@ const loginSchema = yup.object().shape({
 type LoginData = yup.InferType<typeof loginSchema>;
 
 const Login = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(loginSchema),
+  const { getInputProps, onSubmit } = useForm({
+    validate: yupResolver(loginSchema),
   });
 
   const { login, auth } = useContext(AuthContext);
 
-  const onSubmit = ({ email, password }: FieldValues) => {
-    login(email, password);
+  const submit = (values: any) => {
+    login(values.email, values.password);
   };
 
   return (
     <div className="flex justify-center flex-col gap-5 items-center p-5">
       <h1 className="text-5xl text-blue-500 font-semibold">Login Form</h1>
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={onSubmit(submit)}
         className="mt-10 w-1/2 flex flex-col gap-5"
       >
-        <div className="flex flex-col">
-          <label htmlFor="email">Email</label>
-          <input
-            className="h-10 rounded-md px-3"
-            type="email"
-            id="email"
-            {...register("email")}
-          />
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="password">Password</label>
-          <input
-            className="h-10 rounded-md px-3"
-            type="password"
-            id="password"
-            {...register("password")}
-          />
-        </div>
-        <button className="bg-blue-500 text-white rounded-md py-2 active:scale-95 mt-5">
-          Login
-        </button>
+        <TextInput
+          withAsterisk
+          label="Email"
+          placeholder="Enter your email"
+          {...getInputProps("email")}
+        />
+        <PasswordInput
+          withAsterisk
+          label="Password"
+          placeholder="Enter your password"
+          {...getInputProps("password")}
+        />
+        <Group position="center" mt="md">
+          <Button
+            type="submit"
+            className="bg-blue-500 text-white rounded-md py-2 active:scale-95 mt-5"
+            size="lg"
+          >
+            Login
+          </Button>
+        </Group>
       </form>
     </div>
   );

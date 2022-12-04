@@ -1,15 +1,17 @@
-import { useContext } from "react";
-import { NavContext } from "../../contexts/NavContext";
+import { Navbar } from "@mantine/core";
 
 const SideBar = () => {
-  const { isSidebarOpen } = useContext(NavContext);
-
-  const sidebarClass = isSidebarOpen ? "w-48" : "w-0";
-
   return (
-    <div
-      className={`bg-gray-500 h-screen fixed top-24 left-0 bottom-0 transition-all delay-300 ${sidebarClass}`}
-    ></div>
+    <Navbar
+      width={{
+        base: 300,
+      }}
+      height="100vh"
+      p="xs"
+      className="transition-all delay-200 bg-gray-100"
+    >
+      test
+    </Navbar>
   );
 };
 
