@@ -9,7 +9,7 @@ const menus = [
   {
     title: "Dashboard",
     icon: MdOutlineDashboard,
-    link: "/",
+    link: "/dashboard",
   },
   {
     title: "Management",
@@ -37,19 +37,21 @@ const SideBar = () => {
         base: 200,
       }}
       height="100vh"
-      p="xs"
       className="transition-all delay-200 bg-gray-100"
     >
-      <Navbar.Section grow mt="sm" p="md">
-        <div className="flex flex-col gap-5">
+      <Navbar.Section grow mt="md">
+        <div className="flex flex-col gap-10 items-center justify-center">
           {menus.map((menu) => (
             <NavLink
               component={Link}
               key={menu.title}
-              icon={<menu.icon />}
+              icon={<menu.icon className="text-2xl" />}
               label={menu.title}
-              active={pathname === menu.link}
+              active={pathname.includes(menu.link)}
               to={menu.link}
+              classNames={{
+                root: "p-4 flex items-center rounded-md",
+              }}
             />
           ))}
         </div>

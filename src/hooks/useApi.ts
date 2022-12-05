@@ -5,13 +5,19 @@ import { BaseAuthStore } from "pocketbase";
 export class AuthStore extends BaseAuthStore {
   record: any;
 
-  saveRecord(record: any) {
+  saveRecord(record: any, token: string) {
     this.record = record;
+    const obj = {
+      token,
+      user: record,
+    };
+    localStorage.setItem(config.apiKey, JSON.stringify(obj));
   }
 
   clear() {
     this.record = null;
     super.clear();
+    localStorage.removeItem(config.apiKey);
   }
 }
 
