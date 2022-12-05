@@ -19,6 +19,8 @@ import Management from "./pages/Management";
 import Reports from "./pages/Reports";
 import Settings from "./pages/Settings";
 
+import Seed from "./Seed";
+
 function App() {
   return (
     <Router>
@@ -36,6 +38,7 @@ function App() {
           <Route element={<Public />}>
             <Route path="/login" element={<Login />} />
           </Route>
+          {/* <Route path="/seed" element={<Seed />} /> */}
           <Route path="*" element={<Page404 />} />
         </Routes>
       </AuthProvider>

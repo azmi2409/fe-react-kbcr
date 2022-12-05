@@ -1,7 +1,8 @@
 import useApi from "./useApi";
-import React, { useReducer, useMemo } from "react";
+import React, { useReducer, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import config from "../config";
+import { TbToolsKitchen } from "react-icons/tb";
 
 type User = {
   id: string;
@@ -37,6 +38,7 @@ const authReducer = (state: Auth, action: Action) => {
       return {
         token: null,
         user: null,
+        model: null,
       };
     default:
       return state;
@@ -44,16 +46,13 @@ const authReducer = (state: Auth, action: Action) => {
 };
 
 const useAuth = () => {
-  const data = useMemo(
-    () => JSON.parse(localStorage.getItem(config.apiKey) ?? "{}"),
-    []
-  );
   const navigate = useNavigate();
   const pb: any = useApi();
   const [auth, dispatch] = useReducer(authReducer, {
-    token: data?.token || null,
-    user: data?.user || null,
+    token: pb.authStore.token || null,
+    user: pb.authStore.record || null,
   });
+  const firstLoad = React.useRef(true);
 
   const login = async (email: string, password: string) => {
     try {
@@ -61,7 +60,6 @@ const useAuth = () => {
         .collection("users")
         .authWithPassword(email, password);
       if (token) {
-        pb.authStore.saveRecord(user, token);
         dispatch({
           type: AuthActionsKind.LOGIN,
           payload: {
@@ -81,10 +79,38 @@ const useAuth = () => {
     dispatch({ type: AuthActionsKind.LOGOUT, payload: null });
   };
 
+  const refresh = async () => {
+    try {
+      const { token, record: user } = await pb
+        .collection("users")
+        .authRefresh();
+      if (token) {
+        dispatch({
+          type: AuthActionsKind.LOGIN,
+          payload: {
+            token,
+            user,
+          },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      logout();
+    }
+  };
+
+  useEffect(() => {
+    if (firstLoad.current) {
+      refresh();
+      firstLoad.current = false;
+    }
+  }, []);
+
   return {
     auth,
     login,
     logout,
+    pb,
   };
 };
 
