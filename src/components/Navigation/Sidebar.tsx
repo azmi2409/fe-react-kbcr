@@ -1,15 +1,62 @@
-import { useContext } from "react";
-import { NavContext } from "../../contexts/NavContext";
+import { Navbar, NavLink } from "@mantine/core";
+import { MdOutlineDashboard } from "react-icons/md";
+import { SiManageiq } from "react-icons/si";
+import { TbReportAnalytics } from "react-icons/tb";
+import { IoSettingsOutline } from "react-icons/io5";
+import { useLocation, Link } from "react-router-dom";
+
+const menus = [
+  {
+    title: "Dashboard",
+    icon: MdOutlineDashboard,
+    link: "/dashboard",
+  },
+  {
+    title: "Management",
+    icon: SiManageiq,
+    link: "/management",
+  },
+  {
+    title: "Reports",
+    icon: TbReportAnalytics,
+    link: "/reports",
+  },
+  {
+    title: "Settings",
+    icon: IoSettingsOutline,
+    link: "/settings",
+  },
+];
 
 const SideBar = () => {
-  const { isSidebarOpen } = useContext(NavContext);
-
-  const sidebarClass = isSidebarOpen ? "w-48" : "w-0";
+  const { pathname } = useLocation();
 
   return (
-    <div
-      className={`bg-gray-500 h-screen fixed top-24 left-0 bottom-0 transition-all delay-300 ${sidebarClass}`}
-    ></div>
+    <Navbar
+      width={{
+        base: 200,
+      }}
+      height="100vh"
+      className="transition-all delay-200 bg-gray-100"
+    >
+      <Navbar.Section grow mt="md">
+        <div className="flex flex-col gap-10 items-center justify-center">
+          {menus.map((menu) => (
+            <NavLink
+              component={Link}
+              key={menu.title}
+              icon={<menu.icon className="text-2xl" />}
+              label={menu.title}
+              active={pathname.includes(menu.link)}
+              to={menu.link}
+              classNames={{
+                root: "p-4 flex items-center rounded-md",
+              }}
+            />
+          ))}
+        </div>
+      </Navbar.Section>
+    </Navbar>
   );
 };
 
