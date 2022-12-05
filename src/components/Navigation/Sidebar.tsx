@@ -3,8 +3,7 @@ import { MdOutlineDashboard } from "react-icons/md";
 import { SiManageiq } from "react-icons/si";
 import { TbReportAnalytics } from "react-icons/tb";
 import { IoSettingsOutline } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 
 const menus = [
   {
@@ -30,7 +29,6 @@ const menus = [
 ];
 
 const SideBar = () => {
-  const navigate = useNavigate();
   const { pathname } = useLocation();
 
   return (
@@ -46,11 +44,12 @@ const SideBar = () => {
         <div className="flex flex-col gap-5">
           {menus.map((menu) => (
             <NavLink
+              component={Link}
               key={menu.title}
               icon={<menu.icon />}
               label={menu.title}
-              onClick={() => navigate(menu.link)}
               active={pathname === menu.link}
+              to={menu.link}
             />
           ))}
         </div>
