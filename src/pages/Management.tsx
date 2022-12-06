@@ -54,9 +54,15 @@ const Management = () => {
   return (
     <Container size={"xl"} className="flex flex-col gap-5">
       <div className="flex justify-between items-center py-5 px-3">
-        <Title order={1}>Management</Title>
+        <Title
+          className="hover:underline cursor-default capitalize text-gray-700"
+          order={1}
+        >
+          Management
+        </Title>
         <Group>
-          <Button variant="outline">Add Logs</Button>
+          <Button variant="outline">Add Log</Button>
+          <Button variant="outline">Record Yield</Button>
         </Group>
       </div>
       <Table
