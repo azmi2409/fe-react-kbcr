@@ -1,6 +1,7 @@
 import { Table } from "@mantine/core";
 import { useTable } from "react-table";
 import { useMemo, forwardRef } from "react";
+import { HeaderGroup } from "react-table";
 
 interface TableProps {
   data: any[];
@@ -9,7 +10,7 @@ interface TableProps {
   error?: boolean;
 }
 
-const Tables = forwardRef<any, any>((props, ref) => {
+const Tables = forwardRef<any, TableProps>((props, ref) => {
   const { data, columns, loading, error } = props;
   const memoData = useMemo(() => data, [data]);
   const memoColumns = useMemo(() => columns, []);
@@ -33,8 +34,10 @@ const Tables = forwardRef<any, any>((props, ref) => {
       <thead>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+            {headerGroup.headers.map((column: any) => (
+              <th {...column.getHeaderProps()} style={column?.style}>
+                {column.render("Header")}
+              </th>
             ))}
           </tr>
         ))}
