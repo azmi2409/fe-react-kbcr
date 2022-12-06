@@ -1,4 +1,5 @@
 import moment from "moment";
+import { BsThreeDots } from "react-icons/bs";
 
 const countAge = (time: string) => {
   //check now - time in year
@@ -35,7 +36,22 @@ export const columns = [
     accessor: "location",
   },
   {
-    Header: "Action",
+    Header: CenterHeader({ value: "Action" }),
     id: "action",
+    Cell: ActionCell,
   },
 ];
+
+export function CenterHeader({ value }: any) {
+  return (
+    <div className="flex justify-center items-center text-center">{value}</div>
+  );
+}
+
+export function ActionCell() {
+  return (
+    <span className="flex justify-center items-center">
+      <BsThreeDots className="cursor-pointer text-xl" />
+    </span>
+  );
+}
