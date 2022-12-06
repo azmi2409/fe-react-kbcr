@@ -4,6 +4,7 @@ import { useIntersection } from "@mantine/hooks";
 import { useInfiniteQuery } from "react-query";
 import { columns } from "../components/Management/columns";
 import { Table } from "../components/Table";
+import { Container, Title } from "@mantine/core";
 
 const Management = () => {
   const pb = useApi();
@@ -51,14 +52,15 @@ const Management = () => {
   }
 
   return (
-    <div className="flex flex-col gap-4">
+    <Container size={"xl"} className="flex flex-col gap-5">
+      <Title order={1}>Management</Title>
       <Table
         ref={ref}
         columns={columns}
         data={flatData ?? []}
         loading={isLoading}
       />
-    </div>
+    </Container>
   );
 };
 

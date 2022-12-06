@@ -10,7 +10,7 @@ const client = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <MantineProvider
-      theme={{ colorScheme: "light" }}
+      theme={{ colorScheme: "light", fontFamily: '"Poppins", sans-serif' }}
       withGlobalStyles
       withNormalizeCSS
       withCSSVariables
