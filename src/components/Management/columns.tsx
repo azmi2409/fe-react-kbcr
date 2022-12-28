@@ -1,7 +1,9 @@
+import { useContext, useMemo } from "react";
 import moment from "moment";
 import { BsThreeDots } from "react-icons/bs";
 import { GrFormView, GrFormEdit } from "react-icons/gr";
 import { Menu } from "@mantine/core";
+import { ModalContext } from "../../pages/Management";
 
 const countAge = (time: string) => {
   //check now - time in year
@@ -71,18 +73,25 @@ export function CenterHeader({ value }: any) {
   );
 }
 
-const actionMenus = [
-  {
-    label: "View",
-    Icon: GrFormView,
-  },
-  {
-    label: "Edit",
-    Icon: GrFormEdit,
-  },
-];
-
 export function ActionCell() {
+  const { openModal } = useContext(ModalContext);
+
+  const actionMenus = useMemo(
+    () => [
+      {
+        label: "View",
+        Icon: GrFormView,
+        handler: () => {},
+      },
+      {
+        label: "Edit",
+        Icon: GrFormEdit,
+        handler: openModal,
+      },
+    ],
+    []
+  );
+
   return (
     <Menu shadow="md">
       <Menu.Target>
@@ -92,8 +101,8 @@ export function ActionCell() {
       </Menu.Target>
       <Menu.Dropdown>
         <Menu.Label>Actions</Menu.Label>
-        {actionMenus.map(({ label, Icon }) => (
-          <Menu.Item key={label} icon={<Icon />}>
+        {actionMenus.map(({ label, Icon, handler }) => (
+          <Menu.Item key={label} onClick={handler} icon={<Icon />}>
             {label}
           </Menu.Item>
         ))}
